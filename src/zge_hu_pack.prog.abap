@@ -5,7 +5,7 @@
 *&---------------------------------------------------------------------*
 REPORT zge_hu_pack.
 
-TABLES: rlmob, lips.
+TABLES: rlmob, lips, vekp, mara.
 
 DATA: ok_code TYPE sy-ucomm,
       save_ok TYPE sy-ucomm.
@@ -14,6 +14,7 @@ DATA: lv_delivery TYPE likp-vbeln,
       lv_dlvtype  TYPE likp-lfart,
       pack_status TYPE c,
       packed      TYPE c.
+
 *&---------------------------------------------------------------------*
 *& Module STATUS_0100 OUTPUT
 *&---------------------------------------------------------------------*
@@ -90,14 +91,95 @@ MODULE user_command_0200 INPUT.
   CLEAR ok_code.
 
   CASE save_ok.
-    when 'BACK'.
-      clear packed.
-      call screen '0100'.
-    when 'LIST_HU'.
-      call screen '0600'.
-    when 'NEW_HU'.
-      call screen '0300'.
-    when 'TO_BE_PACKED'.
-      call screen '900'.
+    WHEN 'BACK'.
+      CLEAR packed.
+      CALL SCREEN '0100'.
+    WHEN 'LIST_HU'.
+      CALL SCREEN '0600'.
+    WHEN 'NEW_HU'.
+      CALL SCREEN '0300'.
+    WHEN 'TO_BE_PACKED'.
+      CALL SCREEN '900'.
   ENDCASE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0300  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_0300 INPUT.
+  save_ok = ok_code.
+  CLEAR ok_code.
+
+  CASE save_ok.
+    WHEN 'SAVE'.
+
+      DATA: ls_hdr_prop TYPE bapihuhdrproposal,
+            ls_hu_hdr   TYPE bapihuheader,
+            lv_hukey    TYPE bapihukey-hu_exid,
+            ls_messages TYPE TABLE OF bapiret2.
+
+      ls_hdr_prop-pack_mat = 'CARTON'.
+
+      CALL FUNCTION 'BAPI_HU_CREATE'
+        EXPORTING
+          headerproposal = ls_hdr_prop
+        IMPORTING
+          huheader       = ls_hu_hdr
+          hukey          = lv_hukey
+        TABLES
+*         ITEMSPROPOSAL  =
+*         ITEMSSERIALNO  =
+          return         = ls_messages
+*         HUITEM         =
+*         CWM_ITEMSPROPOSAL       =
+*         CWM_HUITEM     =
+        .
+
+      CALL FUNCTION 'BAPI_TRANSACTION_COMMIT'
+        EXPORTING
+          wait = ' '
+*        IMPORTING
+*         return = ls_messages.
+        .
+
+      IF sy-subrc <> 0.
+
+      ELSE.
+        SELECT SINGLE vrkme
+          INTO rlmob-chuuom
+          FROM lips
+          WHERE vbeln = lv_delivery.
+
+        vekp-exidv = lv_hukey.
+      ENDIF.
+
+      CALL SCREEN '0400'.
+    WHEN 'CLEAR'.
+      CLEAR vekp-exidv2.
+    WHEN 'BACK'.
+      CLEAR vekp-exidv2.
+      CALL SCREEN '0200'.
+  ENDCASE.
+ENDMODULE.
+*&---------------------------------------------------------------------*
+*&      Module  USER_COMMAND_0400  INPUT
+*&---------------------------------------------------------------------*
+*       text
+*----------------------------------------------------------------------*
+MODULE user_command_0400 INPUT.
+  save_ok = ok_code.
+  CLEAR ok_code.
+
+  CASE save_ok.
+    WHEN 'HOME'.
+      CALL SCREEN '0200'.
+    WHEN 'BACK'.
+      CALL SCREEN '0300'.
+    WHEN 'CLEAR'.
+      CLEAR: rlmob-chumat, rlmob-csernr, mara-mfrpn, rlmob-chuqty, rlmob-chuuom.
+    WHEN 'SAVE'.
+    WHEN 'PACK'.
+  ENDCASE.
+
 ENDMODULE.
