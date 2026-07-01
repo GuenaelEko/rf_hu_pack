@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SICF" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <URL>/zits_libfiori/</URL>
+   <ICFSERVICE>
+    <ICF_NAME>ZITS_LIBFIORI</ICF_NAME>
+    <HTTPCDE500>2</HTTPCDE500>
+    <KIND401>Y</KIND401>
+    <HTTPCDE401>2</HTTPCDE401>
+    <SYSLOG401>X</SYSLOG401>
+    <HTTPCDELPAG>2</HTTPCDELPAG>
+    <ICFGUILNK>Y</ICFGUILNK>
+    <HTTPCDENFPAG>2</HTTPCDENFPAG>
+    <APPLCUSTFLAG>3</APPLCUSTFLAG>
+    <ORIG_NAME>zits_libfiori</ORIG_NAME>
+   </ICFSERVICE>
+   <ICFDOCU>
+    <ICF_NAME>ZITS_LIBFIORI</ICF_NAME>
+    <ICF_LANGU>E</ICF_LANGU>
+    <ICF_DOCU> For Mobile Responsive Design Style (Fiori)</ICF_DOCU>
+   </ICFDOCU>
+   <ICFHANDLER_TABLE>
+    <ICFHANDLER>
+     <ICF_NAME>ZITS_LIBFIORI</ICF_NAME>
+     <ICFORDER>01</ICFORDER>
+     <ICFTYP>A</ICFTYP>
+     <ICFHANDLER>CL_HTTP_EXT_ITS_2</ICFHANDLER>
+    </ICFHANDLER>
+   </ICFHANDLER_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

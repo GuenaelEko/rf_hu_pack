@@ -18,6 +18,12 @@
     <TCODE>ZRF_PACK</TCODE>
     <TTEXT>HU Packing</TTEXT>
    </TSTCT>
+   <I18N_TPOOL>
+    <TSTCT>
+     <SPRSL>둮</SPRSL>
+     <TTEXT>HU Packing</TTEXT>
+    </TSTCT>
+   </I18N_TPOOL>
   </asx:values>
  </asx:abap>
 </abapGit>

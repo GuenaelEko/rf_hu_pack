@@ -1,0 +1,23 @@
+`<!-- Generated Template
+      NAME:   GEN_TEMPLATE_NAME
+      SCREEN: GEN_SCREEN
+      DATE:   GEN_DATE
+      TIME:   GEN_TIME
+      STYLE:  GEN_STYLE
+-->
+declare class(name, idx=1), style(name, idx=1), style_attr(name, idx=1), icon(name, idx=1),
+    class_ext(name, idx=1), align(name, idx=1), label(name, idx=1), has_label(name, idx=1),
+    width(i, a), margin_left(i, a), w(i, a), sh(), mkid(s) in "some.html";
+if ( ~itsmobileFuncInclude != "" )
+    include(~service=~current_service, ~theme=~theme, ~name=~itsmobileFuncInclude, ~style="x");
+else
+    include(~service="itsmobile", ~theme="99", ~name=nonExt&"functions", ~style="x");
+end;
+
+declare cust_control(name, width, height) in "some.html";
+if ( ~itsmobileCustomControls != "" )
+    include(~service=~current_service, ~theme=~theme, ~name=~itsmobileCustomControls, ~style="x");
+else
+    include(~service="itsmobile", ~theme="99", ~name=nonExt&"cust_controls", ~style="x");
+end;`
+                                                           

@@ -1,0 +1,27 @@
+`if ( ( 'GEN_NAME'[GEN_LOOP_LINE].exists == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE].visible == "X" ) )
+    `<input type="text" `
+    `style="`width("GEN_COLS", "GEN_WIDTH"); align("GEN_NAME", GEN_LOOP_LINE); style("GEN_NAME", GEN_LOOP_LINE)`" `
+    `class="MobileF4`class_ext("GEN_NAME", GEN_LOOP_LINE)` `class("GEN_NAME", GEN_LOOP_LINE)`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'GEN_NAME'[GEN_LOOP_LINE].name`" `end;
+    `name="`'GEN_NAME'[GEN_LOOP_LINE].name`" `
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].disabled == "X" ) `disabled="disabled" `end;
+    if ( ( 'GEN_NAME'[GEN_LOOP_LINE].inputrequired == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE] == "?" ) )
+        `value="" `
+    else
+        `value="`strmaskext('GEN_NAME'[GEN_LOOP_LINE], 1)`" `
+    end;
+    `size="`'GEN_NAME'[GEN_LOOP_LINE].width`" `
+    `maxlength="`'GEN_NAME'[GEN_LOOP_LINE].maxinputsize`" `
+    `onfocus="setFocusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `
+    `onblur="leaveFocusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `
+    sh()`>`
+    `<input type="button" value="?" `
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].disabled == "X" )
+        `class="MobileF4ButtonDisabled" disabled="disabled" `
+    else
+        `class="MobileF4Button" `
+    end;
+    `onclick="setOkCodeForF4('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `sh()`>`
+else
+    `<span style="`margin_left("GEN_COLS", "GEN_WIDTH")`; height:1em; display: inline-block"></span>`
+end;`                                                                                                  

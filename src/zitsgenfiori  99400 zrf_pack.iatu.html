@@ -1,0 +1,1001 @@
+`if (~currdynpro.speechenabled != "")
+`<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+`elseif (~itsmobileStandardsMode == "X")`
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+   "http://www.w3.org/TR/html4/loose.dtd">
+`end;`
+<html`if (~currdynpro.speechenabled != "")
+    ` xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:vxml="http://www.w3.org/2001/vxml"
+      xmlns:ev="http://www.w3.org/2001/xml-events"
+      xmlns:xv="http://www.voicexml.org/2002/xhtml+voice"
+      class="MobileHtml"`
+  end;`>`
+  if ( ~itsmobileNameSpace != "" )
+    ~current_service = ~itsmobileNameSpace & ~service;
+  elseif ( strsub(~sources, 0, 1) == "/" )
+    ~current_service = strsub(~sources, 0, strchr(~sources, "/", 1)+1) & ~service;
+  else
+    ~current_service = ~service;
+  end;`
+`
+<!-- Generated Template
+      NAME:   ZRF_PACK
+      SCREEN: 0400
+      DATE:   20260612
+      TIME:   072326
+      STYLE:  ZMOBFIORI
+-->
+declare class(name, idx=1), style(name, idx=1), style_attr(name, idx=1), icon(name, idx=1),
+    class_ext(name, idx=1), align(name, idx=1), label(name, idx=1), has_label(name, idx=1),
+    width(i, a), margin_left(i, a), w(i, a), sh(), mkid(s) in "some.html";
+if ( ~itsmobileFuncInclude != "" )
+    include(~service=~current_service, ~theme=~theme, ~name=~itsmobileFuncInclude, ~style="x");
+else
+    include(~service="itsmobile", ~theme="99", ~name=nonExt&"functions", ~style="x");
+end;
+
+declare cust_control(name, width, height) in "some.html";
+if ( ~itsmobileCustomControls != "" )
+    include(~service=~current_service, ~theme=~theme, ~name=~itsmobileCustomControls, ~style="x");
+else
+    include(~service="itsmobile", ~theme="99", ~name=nonExt&"cust_controls", ~style="x");
+end;`
+`
+    `<head>
+
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    `if ( ~itsmobileDeviceInclude != "" )
+        include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileDeviceInclude & ".html");
+     end;
+        `<title>`~windowtitle`</title>
+`if (~resp_content_type == "") ~resp_content_type = "text/html"; end;`
+        <meta http-equiv="Content-Type" content="`~resp_content_type`; charset=`~resp_content_charset`" `sh()`>`
+if ( ~itsmobileSoundInclude != "" ) <!-- customers sound -->
+   include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileSoundInclude & ".html");
+else <!-- default -->
+   include(~service="itsmobile", ~language="", ~theme="99", ~name="include/sound.html");
+end;
+ if ( ~itsmobileCssInclude != "" ) <!-- customer include from gui settings -->`
+        <link rel="stylesheet" href="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileCssInclude & ".css")`" type="text/css" `sh()`>
+` else <!-- default include from itsmobile --> `
+        <link rel="stylesheet" href="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="styles/all/mobile.css")`" type="text/css" `sh()`>
+` end;`
+
+<link href="https://blogs.sap.com//unpkg.com/fundamental-styles@latest/dist/fundamental-styles.css" rel="stylesheet">`
+ if ( ~itsmobileJsInclude != "" ) <!-- customer include specified in gui settings -->`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileJsInclude & ".js")`"></script>
+` else <!-- default include from itsmobile -->`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="scripts/all/mobile.js")`"></script>
+` end;
+  if ( ~itsmobileCustomJsInclude != "" )`
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service=~current_service, ~theme=~theme, ~language="", ~name=~itsmobileCustomJsInclude & ".js")`"></script>
+` end;`
+        <script type="text/javascript" language="Javascript">
+           var itsmobile_eos = "`wgateurl(~okcode="/nex")`";
+        </script>
+` <!-- rfid values --------------------------- -->
+  if ( ~RfidEnabledFields != "" ) `
+        <script type="text/javascript" language="javascript" src="`mimeURL(~service="itsmobile", ~theme=99, ~language="", ~name="rfid/rfbutton.js")`"></script>
+        <script type="text/javascript" language="Javascript">
+           var rfid_fields = new Object;
+`   repeat with i from 1 to ~RfidEnabledFields.dim
+      <!-- get field name and index -->
+      rfidField = ~RfidEnabledFields[i];
+      rfidFieldIdx = ~RfidEnabledFields[i].idx;
+      rfidFieldParams = ~RfidEnabledFields[i].params; `
+           rfid_fields["`rfidField`[`rfidFieldIdx`]"] = { `rfidFieldParams` };
+`   end;`
+        </script>
+` end;`
+
+`       <!-- Check if screen supports voice integration -->
+        if ( ~currdynpro.speechenabled != "" )
+          <!-- include the htmlb functions for voice integration -->
+          if ( ~itsmobileVoiceInclude != "" ) <!-- customers voice generation html -->
+            include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileVoiceInclude & ".html");
+          else <!-- default its default voice include -->
+            include(~service="itsmobile", ~language="", ~theme="99", ~name="include/voice.html");
+          end;
+        end;
+    `</head>`
+    `<body class="MobileBody `class("~currdynpro", 1)`" `style_attr("~currdynpro", 1);
+      if (~currdynpro.speechenabled != "")` id="MobileBody" ev:event="load" ev:handler="#sayOnPageLoad"` else
+      ` onload="setFocus('`~focusfield`');`~itsmobileOnloadHandler`"` end;
+      ` onkeydown="return processKeyEvent(event);" onhelp="return false;">
+`
+        `<form method="post" action="`WGateURL()`" id="mobileform" name="mobileform" onsubmit="return firstSend()" style="display:inline">
+            <input type="hidden" name="~OkCode" value="/0"`sh()`>
+            <input type="hidden" name="~FKey" value=""`sh()`>
+            <input type="hidden" name="~Event" value=""`sh()`>
+            <input type="hidden" name="~Control" value=""`sh()`>
+            <input type="hidden" name="~Focusfield" value=""`sh()`>`if (~SEC_SESSTOKEN != "")`
+            <input type="hidden" name="~SEC_SESSTOKEN" value="`~SEC_SESSTOKEN`"`sh()`>`end`
+`if (~active_timer != "")
+    include(~service="itsmobile", ~theme="99", ~name="timer.html");
+    timer(~active_timer, width, height);
+end`
+`
+`<!-- main screen begin -->
+<div width="100%">`
+    if ( ~itsmobileCuaInclude != "" ) <!-- customers cua area -->
+       include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileCuaInclude & ".html");
+    elseif ( ~itsmobileNoCuaInclude != "1" && ~itsmobileNoCuaInclude != "X" ) <!-- default cua area -->
+
+    end;`
+
+</div>
+
+<main class="fd-page fd-page--home fd-page--list">
+  <header>
+    <div class="fd-bar fd-bar--home-page-xl fd-bar--header">
+      <div class="fd-bar__middle">
+        <div class="fd-bar__element">
+            <b>Biobest SAP</b>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="fd-page__content--xl" role="region">
+    <div>
+        <br>
+
+`
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'RLMOB-PBACK'[1].exists == "X" && 'RLMOB-PBACK'[1].visible == "X" ) ||
+     ( 'RLMOB-PCLEAR'[1].exists == "X" && 'RLMOB-PCLEAR'[1].visible == "X" ) ||
+     ( 'HOME'[1].exists == "X" && 'HOME'[1].visible == "X" ) ||
+     0 )
+`<!-- line 1 -->
+<div class="MobileRow">`
+if ( ( 'RLMOB-PBACK'[1].exists == "X" ) && ( 'RLMOB-PBACK'[1].visible == "X" ) )
+    `<button class="fd-button" style="width: 100%" onclick="setOkCode ('`'RLMOB-PBACK'[1].okcode`')">`strmask('RLMOB-PBACK'[1].label) `</button>`
+    `<br><br>`
+end;
+if ( 3 != 0 )
+    `<span style="`margin_left("3", "2.460em")`; height:1em; display: inline-block"></span>`
+end;
+if ( ( 'RLMOB-PCLEAR'[1].exists == "X" ) && ( 'RLMOB-PCLEAR'[1].visible == "X" ) )
+    `<button class="fd-button" style="width: 100%" onclick="setOkCode ('`'RLMOB-PCLEAR'[1].okcode`')">`strmask('RLMOB-PCLEAR'[1].label) `</button>`
+    `<br><br>`
+end;
+if ( 3 != 0 )
+    `<span style="`margin_left("3", "2.460em")`; height:1em; display: inline-block"></span>`
+end;
+if ( ( 'HOME'[1].exists == "X" ) && ( 'HOME'[1].visible == "X" ) )
+    `<button class="fd-button" style="width: 100%" onclick="setOkCode ('`'HOME'[1].okcode`')">`strmask('HOME'[1].label) `</button>`
+    `<br><br>`
+end;
+if ( 5 != 0 )
+    `<span style="`margin_left("5", "4.100em")`; height:1em; display: inline-block"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'GV_EXIDV'[1].exists == "X" && 'GV_EXIDV'[1].visible == "X" ) ||
+     ( 'GV_EXIDV2'[1].exists == "X" && 'GV_EXIDV2'[1].visible == "X" ) ||
+     0 )
+`<!-- line 2 -->
+<div class="MobileRow">`
+if ( 'GV_EXIDV'[1].exists == "X" )
+    if ( 'GV_EXIDV'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('GV_EXIDV', 1); class("GV_EXIDV", 1)`" `
+         if ( 'GV_EXIDV'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'GV_EXIDV'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'GV_EXIDV'[1].okcode != "" )
+             `onchange="setOkCode('`'GV_EXIDV'[1].okcode`');return false;" `
+         end;
+         `style="`width("21", "17.220em"); style("GV_EXIDV", 1)`" `
+         `rows="`'GV_EXIDV'[1].rows`" cols="21" `
+         `onfocus="setFocusField('`'GV_EXIDV'[1].name`');" `
+         `onblur="leaveFocusField('`'GV_EXIDV'[1].name`');" `
+         `name="`'GV_EXIDV'[1].name`">`'GV_EXIDV'[1]`</textarea>`
+    else
+        if ( 'GV_EXIDV'[1].disabled == "X" )
+            if ( 'GV_EXIDV'[1].visible != "X" )
+                 `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_EXIDV'[1].type == "Password" )
+                `<input class="fd-input" type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("21", "17.220em"); style("GV_EXIDV", 1)`" `
+                if ( 'GV_EXIDV'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("GV_EXIDV", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("GV_EXIDV", 1)`" `
+                end;
+            elseif ( 'GV_EXIDV'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("21", "17.220em"); align("GV_EXIDV", 1); style("GV_EXIDV", 1)`" `
+                if ( 'GV_EXIDV'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("GV_EXIDV", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("GV_EXIDV", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("21", "17.220em"); align("GV_EXIDV", 1); style("GV_EXIDV", 1)`" `
+                if ( 'GV_EXIDV'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("GV_EXIDV", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("GV_EXIDV", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'GV_EXIDV'[1].name`');" `
+            `name="`'GV_EXIDV'[1].name`" `
+            if ( ( 'GV_EXIDV'[1].inputrequired == "X" ) && ( 'GV_EXIDV'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('GV_EXIDV'[1], 1)`" `
+            end;
+            `size="`'GV_EXIDV'[1].width`" maxlength="`'GV_EXIDV'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "GV_EXIDV", 1 );
+            if ( 'GV_EXIDV'[1].visible != "X" )
+                `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_EXIDV'[1].type == "Password" )
+                `<input class="fd-input" type="password" width="100%" `
+            elseif ( 'GV_EXIDV'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_EXIDV'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("GV_EXIDV", 1)`" `
+                else
+                    `class="MobileEditRequired `class("GV_EXIDV", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_EXIDV'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("GV_EXIDV", 1)`" `
+                else
+                    `class="MobileEdit `class("GV_EXIDV", 1)`" `
+                end;
+            end;
+            if ( 'GV_EXIDV'[1].okcode != "" )
+                `onchange="setOkCode('`'GV_EXIDV'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'GV_EXIDV'[1].name`');" `
+            `onblur="leaveFocusField('`'GV_EXIDV'[1].name`');" `
+            `name="`'GV_EXIDV'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'GV_EXIDV'[1].name`" `end;
+            if ( ( 'GV_EXIDV'[1].inputrequired == "X" ) && ( 'GV_EXIDV'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('GV_EXIDV'[1], 1)`" `
+            end;
+            `maxlength="`'GV_EXIDV'[1].maxinputsize`"`
+            sh()`><br>`
+        end;
+    end;
+else
+
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 'GV_EXIDV2'[1].exists == "X" )
+    if ( 'GV_EXIDV2'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('GV_EXIDV2', 1); class("GV_EXIDV2", 1)`" `
+         if ( 'GV_EXIDV2'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'GV_EXIDV2'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'GV_EXIDV2'[1].okcode != "" )
+             `onchange="setOkCode('`'GV_EXIDV2'[1].okcode`');return false;" `
+         end;
+         `style="`width("21", "17.220em"); style("GV_EXIDV2", 1)`" `
+         `rows="`'GV_EXIDV2'[1].rows`" cols="21" `
+         `onfocus="setFocusField('`'GV_EXIDV2'[1].name`');" `
+         `onblur="leaveFocusField('`'GV_EXIDV2'[1].name`');" `
+         `name="`'GV_EXIDV2'[1].name`">`'GV_EXIDV2'[1]`</textarea>`
+    else
+        if ( 'GV_EXIDV2'[1].disabled == "X" )
+            if ( 'GV_EXIDV2'[1].visible != "X" )
+                 `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_EXIDV2'[1].type == "Password" )
+                `<input class="fd-input" type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("21", "17.220em"); style("GV_EXIDV2", 1)`" `
+                if ( 'GV_EXIDV2'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("GV_EXIDV2", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("GV_EXIDV2", 1)`" `
+                end;
+            elseif ( 'GV_EXIDV2'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("21", "17.220em"); align("GV_EXIDV2", 1); style("GV_EXIDV2", 1)`" `
+                if ( 'GV_EXIDV2'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("GV_EXIDV2", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("GV_EXIDV2", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("21", "17.220em"); align("GV_EXIDV2", 1); style("GV_EXIDV2", 1)`" `
+                if ( 'GV_EXIDV2'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("GV_EXIDV2", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("GV_EXIDV2", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'GV_EXIDV2'[1].name`');" `
+            `name="`'GV_EXIDV2'[1].name`" `
+            if ( ( 'GV_EXIDV2'[1].inputrequired == "X" ) && ( 'GV_EXIDV2'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('GV_EXIDV2'[1], 1)`" `
+            end;
+            `size="`'GV_EXIDV2'[1].width`" maxlength="`'GV_EXIDV2'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "GV_EXIDV2", 1 );
+            if ( 'GV_EXIDV2'[1].visible != "X" )
+                `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_EXIDV2'[1].type == "Password" )
+                `<input class="fd-input" type="password" width="100%" `
+            elseif ( 'GV_EXIDV2'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_EXIDV2'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("GV_EXIDV2", 1)`" `
+                else
+                    `class="MobileEditRequired `class("GV_EXIDV2", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_EXIDV2'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("GV_EXIDV2", 1)`" `
+                else
+                    `class="MobileEdit `class("GV_EXIDV2", 1)`" `
+                end;
+            end;
+            if ( 'GV_EXIDV2'[1].okcode != "" )
+                `onchange="setOkCode('`'GV_EXIDV2'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'GV_EXIDV2'[1].name`');" `
+            `onblur="leaveFocusField('`'GV_EXIDV2'[1].name`');" `
+            `name="`'GV_EXIDV2'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'GV_EXIDV2'[1].name`" `end;
+            if ( ( 'GV_EXIDV2'[1].inputrequired == "X" ) && ( 'GV_EXIDV2'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('GV_EXIDV2'[1], 1)`" `
+            end;
+            `maxlength="`'GV_EXIDV2'[1].maxinputsize`"`
+            sh()`><br>`
+        end;
+    end;
+else
+
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1em; display: inline-block"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'MARA-MATNR'[1].exists == "X" && 'MARA-MATNR'[1].visible == "X" ) ||
+     ( 'GV_MATNR'[1].exists == "X" && 'GV_MATNR'[1].visible == "X" ) ||
+     0 )
+`<!-- line 3 -->
+<div class="MobileRow">`
+if ( ( 'MARA-MATNR'[1].exists == "X" ) && ( 'MARA-MATNR'[1].visible == "X" ) )
+    icon( "MARA-MATNR", 1 );
+    `<span style="`width("11", "9.020em"); align("MARA-MATNR", 1); style("MARA-MATNR", 1)`" `
+    if ( 'MARA-MATNR'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted `class("MARA-MATNR", 1)`" `
+    else
+        `class="MobileLabel `class("MARA-MATNR", 1)`" `
+    end
+    `>`label("MARA-MATNR", 1)`</span>`
+else
+    `<span style="`margin_left("11", "9.020em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 'GV_MATNR'[1].exists == "X" )
+    if ( 'GV_MATNR'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('GV_MATNR', 1); class("GV_MATNR", 1)`" `
+         if ( 'GV_MATNR'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'GV_MATNR'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'GV_MATNR'[1].okcode != "" )
+             `onchange="setOkCode('`'GV_MATNR'[1].okcode`');return false;" `
+         end;
+         `style="`width("22", "18.040em"); style("GV_MATNR", 1)`" `
+         `rows="`'GV_MATNR'[1].rows`" cols="22" `
+         `onfocus="setFocusField('`'GV_MATNR'[1].name`');" `
+         `onblur="leaveFocusField('`'GV_MATNR'[1].name`');" `
+         `name="`'GV_MATNR'[1].name`">`'GV_MATNR'[1]`</textarea>`
+    else
+        if ( 'GV_MATNR'[1].disabled == "X" )
+            if ( 'GV_MATNR'[1].visible != "X" )
+                 `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_MATNR'[1].type == "Password" )
+                `<input class="fd-input" type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); style("GV_MATNR", 1)`" `
+                if ( 'GV_MATNR'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("GV_MATNR", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("GV_MATNR", 1)`" `
+                end;
+            elseif ( 'GV_MATNR'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); align("GV_MATNR", 1); style("GV_MATNR", 1)`" `
+                if ( 'GV_MATNR'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("GV_MATNR", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("GV_MATNR", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); align("GV_MATNR", 1); style("GV_MATNR", 1)`" `
+                if ( 'GV_MATNR'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("GV_MATNR", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("GV_MATNR", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'GV_MATNR'[1].name`');" `
+            `name="`'GV_MATNR'[1].name`" `
+            if ( ( 'GV_MATNR'[1].inputrequired == "X" ) && ( 'GV_MATNR'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('GV_MATNR'[1], 1)`" `
+            end;
+            `size="`'GV_MATNR'[1].width`" maxlength="`'GV_MATNR'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "GV_MATNR", 1 );
+            if ( 'GV_MATNR'[1].visible != "X" )
+                `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_MATNR'[1].type == "Password" )
+                `<input class="fd-input" type="password" width="100%" `
+            elseif ( 'GV_MATNR'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_MATNR'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("GV_MATNR", 1)`" `
+                else
+                    `class="MobileEditRequired `class("GV_MATNR", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_MATNR'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("GV_MATNR", 1)`" `
+                else
+                    `class="MobileEdit `class("GV_MATNR", 1)`" `
+                end;
+            end;
+            if ( 'GV_MATNR'[1].okcode != "" )
+                `onchange="setOkCode('`'GV_MATNR'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'GV_MATNR'[1].name`');" `
+            `onblur="leaveFocusField('`'GV_MATNR'[1].name`');" `
+            `name="`'GV_MATNR'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'GV_MATNR'[1].name`" `end;
+            if ( ( 'GV_MATNR'[1].inputrequired == "X" ) && ( 'GV_MATNR'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('GV_MATNR'[1], 1)`" `
+            end;
+            `maxlength="`'GV_MATNR'[1].maxinputsize`"`
+            sh()`><br>`
+        end;
+    end;
+else
+
+end;
+if ( 9 != 0 )
+    `<span style="`margin_left("9", "7.380em")`; height:1em; display: inline-block"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'MARA-MFRPN'[1].exists == "X" && 'MARA-MFRPN'[1].visible == "X" ) ||
+     ( 'GV_MPN'[1].exists == "X" && 'GV_MPN'[1].visible == "X" ) ||
+     0 )
+`<!-- line 4 -->
+<div class="MobileRow">`
+if ( ( 'MARA-MFRPN'[1].exists == "X" ) && ( 'MARA-MFRPN'[1].visible == "X" ) )
+    icon( "MARA-MFRPN", 1 );
+    `<span style="`width("11", "9.020em"); align("MARA-MFRPN", 1); style("MARA-MFRPN", 1)`" `
+    if ( 'MARA-MFRPN'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted `class("MARA-MFRPN", 1)`" `
+    else
+        `class="MobileLabel `class("MARA-MFRPN", 1)`" `
+    end
+    `>`label("MARA-MFRPN", 1)`</span>`
+else
+    `<span style="`margin_left("11", "9.020em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 'GV_MPN'[1].exists == "X" )
+    if ( 'GV_MPN'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('GV_MPN', 1); class("GV_MPN", 1)`" `
+         if ( 'GV_MPN'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'GV_MPN'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'GV_MPN'[1].okcode != "" )
+             `onchange="setOkCode('`'GV_MPN'[1].okcode`');return false;" `
+         end;
+         `style="`width("22", "18.040em"); style("GV_MPN", 1)`" `
+         `rows="`'GV_MPN'[1].rows`" cols="22" `
+         `onfocus="setFocusField('`'GV_MPN'[1].name`');" `
+         `onblur="leaveFocusField('`'GV_MPN'[1].name`');" `
+         `name="`'GV_MPN'[1].name`">`'GV_MPN'[1]`</textarea>`
+    else
+        if ( 'GV_MPN'[1].disabled == "X" )
+            if ( 'GV_MPN'[1].visible != "X" )
+                 `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_MPN'[1].type == "Password" )
+                `<input class="fd-input" type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); style("GV_MPN", 1)`" `
+                if ( 'GV_MPN'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("GV_MPN", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("GV_MPN", 1)`" `
+                end;
+            elseif ( 'GV_MPN'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); align("GV_MPN", 1); style("GV_MPN", 1)`" `
+                if ( 'GV_MPN'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("GV_MPN", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("GV_MPN", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); align("GV_MPN", 1); style("GV_MPN", 1)`" `
+                if ( 'GV_MPN'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("GV_MPN", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("GV_MPN", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'GV_MPN'[1].name`');" `
+            `name="`'GV_MPN'[1].name`" `
+            if ( ( 'GV_MPN'[1].inputrequired == "X" ) && ( 'GV_MPN'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('GV_MPN'[1], 1)`" `
+            end;
+            `size="`'GV_MPN'[1].width`" maxlength="`'GV_MPN'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "GV_MPN", 1 );
+            if ( 'GV_MPN'[1].visible != "X" )
+                `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_MPN'[1].type == "Password" )
+                `<input class="fd-input" type="password" width="100%" `
+            elseif ( 'GV_MPN'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_MPN'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("GV_MPN", 1)`" `
+                else
+                    `class="MobileEditRequired `class("GV_MPN", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_MPN'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("GV_MPN", 1)`" `
+                else
+                    `class="MobileEdit `class("GV_MPN", 1)`" `
+                end;
+            end;
+            if ( 'GV_MPN'[1].okcode != "" )
+                `onchange="setOkCode('`'GV_MPN'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'GV_MPN'[1].name`');" `
+            `onblur="leaveFocusField('`'GV_MPN'[1].name`');" `
+            `name="`'GV_MPN'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'GV_MPN'[1].name`" `end;
+            if ( ( 'GV_MPN'[1].inputrequired == "X" ) && ( 'GV_MPN'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('GV_MPN'[1], 1)`" `
+            end;
+            `maxlength="`'GV_MPN'[1].maxinputsize`"`
+            sh()`><br>`
+        end;
+    end;
+else
+
+end;
+if ( 9 != 0 )
+    `<span style="`margin_left("9", "7.380em")`; height:1em; display: inline-block"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'EQUI-GERNR'[1].exists == "X" && 'EQUI-GERNR'[1].visible == "X" ) ||
+     ( 'GV_SERNR'[1].exists == "X" && 'GV_SERNR'[1].visible == "X" ) ||
+     0 )
+`<!-- line 5 -->
+<div class="MobileRow">`
+if ( ( 'EQUI-GERNR'[1].exists == "X" ) && ( 'EQUI-GERNR'[1].visible == "X" ) )
+    icon( "EQUI-GERNR", 1 );
+    `<span style="`width("11", "9.020em"); align("EQUI-GERNR", 1); style("EQUI-GERNR", 1)`" `
+    if ( 'EQUI-GERNR'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted `class("EQUI-GERNR", 1)`" `
+    else
+        `class="MobileLabel `class("EQUI-GERNR", 1)`" `
+    end
+    `>`label("EQUI-GERNR", 1)`</span>`
+else
+    `<span style="`margin_left("11", "9.020em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 'GV_SERNR'[1].exists == "X" )
+    if ( 'GV_SERNR'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('GV_SERNR', 1); class("GV_SERNR", 1)`" `
+         if ( 'GV_SERNR'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'GV_SERNR'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'GV_SERNR'[1].okcode != "" )
+             `onchange="setOkCode('`'GV_SERNR'[1].okcode`');return false;" `
+         end;
+         `style="`width("22", "18.040em"); style("GV_SERNR", 1)`" `
+         `rows="`'GV_SERNR'[1].rows`" cols="22" `
+         `onfocus="setFocusField('`'GV_SERNR'[1].name`');" `
+         `onblur="leaveFocusField('`'GV_SERNR'[1].name`');" `
+         `name="`'GV_SERNR'[1].name`">`'GV_SERNR'[1]`</textarea>`
+    else
+        if ( 'GV_SERNR'[1].disabled == "X" )
+            if ( 'GV_SERNR'[1].visible != "X" )
+                 `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_SERNR'[1].type == "Password" )
+                `<input class="fd-input" type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); style("GV_SERNR", 1)`" `
+                if ( 'GV_SERNR'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("GV_SERNR", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("GV_SERNR", 1)`" `
+                end;
+            elseif ( 'GV_SERNR'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); align("GV_SERNR", 1); style("GV_SERNR", 1)`" `
+                if ( 'GV_SERNR'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("GV_SERNR", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("GV_SERNR", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); align("GV_SERNR", 1); style("GV_SERNR", 1)`" `
+                if ( 'GV_SERNR'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("GV_SERNR", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("GV_SERNR", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'GV_SERNR'[1].name`');" `
+            `name="`'GV_SERNR'[1].name`" `
+            if ( ( 'GV_SERNR'[1].inputrequired == "X" ) && ( 'GV_SERNR'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('GV_SERNR'[1], 1)`" `
+            end;
+            `size="`'GV_SERNR'[1].width`" maxlength="`'GV_SERNR'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "GV_SERNR", 1 );
+            if ( 'GV_SERNR'[1].visible != "X" )
+                `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_SERNR'[1].type == "Password" )
+                `<input class="fd-input" type="password" width="100%" `
+            elseif ( 'GV_SERNR'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_SERNR'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("GV_SERNR", 1)`" `
+                else
+                    `class="MobileEditRequired `class("GV_SERNR", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_SERNR'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("GV_SERNR", 1)`" `
+                else
+                    `class="MobileEdit `class("GV_SERNR", 1)`" `
+                end;
+            end;
+            if ( 'GV_SERNR'[1].okcode != "" )
+                `onchange="setOkCode('`'GV_SERNR'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'GV_SERNR'[1].name`');" `
+            `onblur="leaveFocusField('`'GV_SERNR'[1].name`');" `
+            `name="`'GV_SERNR'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'GV_SERNR'[1].name`" `end;
+            if ( ( 'GV_SERNR'[1].inputrequired == "X" ) && ( 'GV_SERNR'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('GV_SERNR'[1], 1)`" `
+            end;
+            `maxlength="`'GV_SERNR'[1].maxinputsize`"`
+            sh()`><br>`
+        end;
+    end;
+else
+
+end;
+if ( 9 != 0 )
+    `<span style="`margin_left("9", "7.380em")`; height:1em; display: inline-block"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'VEPO-VEMNG'[1].exists == "X" && 'VEPO-VEMNG'[1].visible == "X" ) ||
+     ( 'GV_QTY'[1].exists == "X" && 'GV_QTY'[1].visible == "X" ) ||
+     ( 'GV_UOM'[1].exists == "X" && 'GV_UOM'[1].visible == "X" ) ||
+     0 )
+`<!-- line 6 -->
+<div class="MobileRow">`
+if ( ( 'VEPO-VEMNG'[1].exists == "X" ) && ( 'VEPO-VEMNG'[1].visible == "X" ) )
+    icon( "VEPO-VEMNG", 1 );
+    `<span style="`width("11", "9.020em"); align("VEPO-VEMNG", 1); style("VEPO-VEMNG", 1)`" `
+    if ( 'VEPO-VEMNG'[1].highlighted == "X" )
+        `class="MobileLabelHighlighted `class("VEPO-VEMNG", 1)`" `
+    else
+        `class="MobileLabel `class("VEPO-VEMNG", 1)`" `
+    end
+    `>`label("VEPO-VEMNG", 1)`</span>`
+else
+    `<span style="`margin_left("11", "9.020em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 'GV_QTY'[1].exists == "X" )
+    if ( 'GV_QTY'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('GV_QTY', 1); class("GV_QTY", 1)`" `
+         if ( 'GV_QTY'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'GV_QTY'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'GV_QTY'[1].okcode != "" )
+             `onchange="setOkCode('`'GV_QTY'[1].okcode`');return false;" `
+         end;
+         `style="`width("22", "18.040em"); style("GV_QTY", 1)`" `
+         `rows="`'GV_QTY'[1].rows`" cols="22" `
+         `onfocus="setFocusField('`'GV_QTY'[1].name`');" `
+         `onblur="leaveFocusField('`'GV_QTY'[1].name`');" `
+         `name="`'GV_QTY'[1].name`">`'GV_QTY'[1]`</textarea>`
+    else
+        if ( 'GV_QTY'[1].disabled == "X" )
+            if ( 'GV_QTY'[1].visible != "X" )
+                 `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_QTY'[1].type == "Password" )
+                `<input class="fd-input" type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); style("GV_QTY", 1)`" `
+                if ( 'GV_QTY'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("GV_QTY", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("GV_QTY", 1)`" `
+                end;
+            elseif ( 'GV_QTY'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); align("GV_QTY", 1); style("GV_QTY", 1)`" `
+                if ( 'GV_QTY'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("GV_QTY", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("GV_QTY", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("22", "18.040em"); align("GV_QTY", 1); style("GV_QTY", 1)`" `
+                if ( 'GV_QTY'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("GV_QTY", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("GV_QTY", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'GV_QTY'[1].name`');" `
+            `name="`'GV_QTY'[1].name`" `
+            if ( ( 'GV_QTY'[1].inputrequired == "X" ) && ( 'GV_QTY'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('GV_QTY'[1], 1)`" `
+            end;
+            `size="`'GV_QTY'[1].width`" maxlength="`'GV_QTY'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "GV_QTY", 1 );
+            if ( 'GV_QTY'[1].visible != "X" )
+                `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_QTY'[1].type == "Password" )
+                `<input class="fd-input" type="password" width="100%" `
+            elseif ( 'GV_QTY'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_QTY'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("GV_QTY", 1)`" `
+                else
+                    `class="MobileEditRequired `class("GV_QTY", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_QTY'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("GV_QTY", 1)`" `
+                else
+                    `class="MobileEdit `class("GV_QTY", 1)`" `
+                end;
+            end;
+            if ( 'GV_QTY'[1].okcode != "" )
+                `onchange="setOkCode('`'GV_QTY'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'GV_QTY'[1].name`');" `
+            `onblur="leaveFocusField('`'GV_QTY'[1].name`');" `
+            `name="`'GV_QTY'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'GV_QTY'[1].name`" `end;
+            if ( ( 'GV_QTY'[1].inputrequired == "X" ) && ( 'GV_QTY'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('GV_QTY'[1], 1)`" `
+            end;
+            `maxlength="`'GV_QTY'[1].maxinputsize`"`
+            sh()`><br>`
+        end;
+    end;
+else
+
+end;
+if ( 0 != 0 )
+    `<span style="`margin_left("0", "0.000em")`; height:1em; display: inline-block"></span>`
+end;
+if ( 'GV_UOM'[1].exists == "X" )
+    if ( 'GV_UOM'[1].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('GV_UOM', 1); class("GV_UOM", 1)`" `
+         if ( 'GV_UOM'[1].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'GV_UOM'[1].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'GV_UOM'[1].okcode != "" )
+             `onchange="setOkCode('`'GV_UOM'[1].okcode`');return false;" `
+         end;
+         `style="`width("4", "3.280em"); style("GV_UOM", 1)`" `
+         `rows="`'GV_UOM'[1].rows`" cols="4" `
+         `onfocus="setFocusField('`'GV_UOM'[1].name`');" `
+         `onblur="leaveFocusField('`'GV_UOM'[1].name`');" `
+         `name="`'GV_UOM'[1].name`">`'GV_UOM'[1]`</textarea>`
+    else
+        if ( 'GV_UOM'[1].disabled == "X" )
+            if ( 'GV_UOM'[1].visible != "X" )
+                 `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_UOM'[1].type == "Password" )
+                `<input class="fd-input" type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("4", "3.280em"); style("GV_UOM", 1)`" `
+                if ( 'GV_UOM'[1].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("GV_UOM", 1)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("GV_UOM", 1)`" `
+                end;
+            elseif ( 'GV_UOM'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("4", "3.280em"); align("GV_UOM", 1); style("GV_UOM", 1)`" `
+                if ( 'GV_UOM'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("GV_UOM", 1)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("GV_UOM", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("4", "3.280em"); align("GV_UOM", 1); style("GV_UOM", 1)`" `
+                if ( 'GV_UOM'[1].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("GV_UOM", 1)`" `
+                else;
+                    `class="MobileEditDisabled `class("GV_UOM", 1)`" `
+                end;
+            end;
+            `onfocus="focusField('`'GV_UOM'[1].name`');" `
+            `name="`'GV_UOM'[1].name`" `
+            if ( ( 'GV_UOM'[1].inputrequired == "X" ) && ( 'GV_UOM'[1] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('GV_UOM'[1], 1)`" `
+            end;
+            `size="`'GV_UOM'[1].width`" maxlength="`'GV_UOM'[1].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "GV_UOM", 1 );
+            if ( 'GV_UOM'[1].visible != "X" )
+                `<input class="fd-input" type="hidden" `
+            elseif ( 'GV_UOM'[1].type == "Password" )
+                `<input class="fd-input" type="password" width="100%" `
+            elseif ( 'GV_UOM'[1].inputrequired == "X" )
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_UOM'[1].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("GV_UOM", 1)`" `
+                else
+                    `class="MobileEditRequired `class("GV_UOM", 1)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GV_UOM'[1].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("GV_UOM", 1)`" `
+                else
+                    `class="MobileEdit `class("GV_UOM", 1)`" `
+                end;
+            end;
+            if ( 'GV_UOM'[1].okcode != "" )
+                `onchange="setOkCode('`'GV_UOM'[1].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'GV_UOM'[1].name`');" `
+            `onblur="leaveFocusField('`'GV_UOM'[1].name`');" `
+            `name="`'GV_UOM'[1].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'GV_UOM'[1].name`" `end;
+            if ( ( 'GV_UOM'[1].inputrequired == "X" ) && ( 'GV_UOM'[1] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('GV_UOM'[1], 1)`" `
+            end;
+            `maxlength="`'GV_UOM'[1].maxinputsize`"`
+            sh()`><br>`
+        end;
+    end;
+else
+
+end;
+if ( 5 != 0 )
+    `<span style="`margin_left("5", "4.100em")`; height:1em; display: inline-block"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     1 )
+`<!-- line 7 -->
+<div class="MobileRow">`
+if ( 42 != 0 )
+    `<span style="`margin_left("42", "34.440em")`; height:1em; display: inline-block"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+if ( ( ~DYNPRO_COMPRESSION != "1" && ~DYNPRO_COMPRESSION != "X" ) ||
+     ( 'PACK'[1].exists == "X" && 'PACK'[1].visible == "X" ) ||
+     ( 'RLMOB-PSAVE'[1].exists == "X" && 'RLMOB-PSAVE'[1].visible == "X" ) ||
+     0 )
+`<!-- line 8 -->
+<div class="MobileRow">`
+if ( ( 'PACK'[1].exists == "X" ) && ( 'PACK'[1].visible == "X" ) )
+    `<button class="fd-button" style="width: 100%" onclick="setOkCode ('`'PACK'[1].okcode`')">`strmask('PACK'[1].label) `</button>`
+    `<br><br>`
+end;
+if ( 11 != 0 )
+    `<span style="`margin_left("11", "9.020em")`; height:1em; display: inline-block"></span>`
+end;
+if ( ( 'RLMOB-PSAVE'[1].exists == "X" ) && ( 'RLMOB-PSAVE'[1].visible == "X" ) )
+    `<button class="fd-button" style="width: 100%" onclick="setOkCode ('`'RLMOB-PSAVE'[1].okcode`')">`strmask('RLMOB-PSAVE'[1].label) `</button>`
+    `<br><br>`
+end;
+if ( 11 != 0 )
+    `<span style="`margin_left("11", "9.020em")`; height:1em; display: inline-block"></span>`
+end;
+<!-- content row end -->`
+</div>
+`end;
+`</div>
+  </div>
+  <footer>
+    <div class="fd-bar fd-bar--home-page-xl fd-bar--footer">
+      <div class="fd-bar__right">
+        <div class="fd-bar__element">
+          <button class="fd-button fd-button--positive" onclick="setOkCode ('/00')">Enter</button>
+        </div>
+      </div>
+    </div>
+  </footer>
+</main>
+<!-- main screen end -->
+`
+        `</form>`
+    `</body>`
+`</html>                                                                                                                                                                                                                                                            

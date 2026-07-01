@@ -5,4 +5,4 @@
 *&---------------------------------------------------------------------*
 REPORT zst74_del_hu.
 
-delete from vekp where venum = '0000109902'.
+delete from vekp where venum = '0000109973'.

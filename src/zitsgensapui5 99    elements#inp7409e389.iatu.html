@@ -1,0 +1,11 @@
+`if ( ( 'GEN_NAME'[GEN_LOOP_LINE].exists == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE].visible == "X" ) )
+    `<span style="`width("GEN_COLS", "GEN_WIDTH"); align("GEN_NAME", GEN_LOOP_LINE); style("GEN_NAME", GEN_LOOP_LINE)`" `
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].highlighted == "X" )
+        `class="MobileLabelHighlighted MobileOutputOnly `class("GEN_NAME", GEN_LOOP_LINE)`"`
+    else
+        `class="MobileLabel MobileOutputOnly `class("GEN_NAME", GEN_LOOP_LINE)`"`
+    end;
+    `>`strmask('GEN_NAME'[GEN_LOOP_LINE])`</span>`
+else
+    `<span style="`margin_left("GEN_COLS", "GEN_WIDTH")`; height:1em; display: inline-block"></span>`
+end;`                                                                                                                         

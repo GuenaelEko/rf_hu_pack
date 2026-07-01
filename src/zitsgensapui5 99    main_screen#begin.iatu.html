@@ -1,0 +1,12 @@
+<!-- main screen begin -->
+<div width="100%">`
+    if ( ~itsmobileCuaInclude != "" ) <!-- customers cua area -->
+       include(~service=~current_service, ~language="", ~theme=~theme, ~name=~itsmobileCuaInclude & ".html");
+    elseif ( ~itsmobileNoCuaInclude != "1" && ~itsmobileNoCuaInclude != "X" ) <!-- default cua area -->
+    end;`
+
+</div>
+<div data-sap-ui-type="sap.m.Page" data-title="Biobest SAP">
+    <div data-sap-ui-aggregation="headerContent">
+    </div>
+    <div data-sap-ui-aggregation="content">                                                                                                                                                                                                                                                    

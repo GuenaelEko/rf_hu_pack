@@ -516,7 +516,6 @@ ENDFORM.
 FORM init_new_hu .
   CLEAR: gv_venum, gv_exidv, gv_exidv2, gt_pack_buffer.
   gv_vhilm  = 'CARTON'.
-*  gv_sn_count = 0.
 ENDFORM.
 *&---------------------------------------------------------------------*
 *& Module STATUS_0300 OUTPUT
@@ -538,6 +537,7 @@ MODULE user_command_0300 INPUT.
   CASE gv_okcode.
     WHEN 'SAVE'.
       PERFORM create_hu.
+      PERFORM clear_fields.
       CLEAR gt_pack_buffer.
 *      gv_sn_count = 0.
       CALL SCREEN '0400'.
@@ -559,6 +559,7 @@ ENDMODULE.
 *& <--  p2        text
 *&---------------------------------------------------------------------*
 FORM create_hu .
+  CLEAR: lt_return.
 
   ls_huhdr_prop-pack_mat = gv_vhilm.
   ls_huhdr_prop-ext_id_hu_2 = gv_exidv2.
@@ -737,7 +738,7 @@ FORM commit_pack_buffer .
 *  DATA: lt_sernr_update          TYPE shp_sernr_update_t,
 *        ls_sernr_update          TYPE shp_sernr_update_t WITH HEADER LINE,
 
-  CLEAR: lt_sernr. "lt_sernr_update.
+  CLEAR: lt_sernr, lt_verko, lt_verpo, ls_vbkok, lt_hvbpok. "lt_sernr_update.
 
   gv_exidv = |{ gv_exidv ALPHA = IN }|.
 
@@ -778,7 +779,7 @@ FORM commit_pack_buffer .
     ENDLOOP.
 
     LOOP AT gt_pack_buffer INTO DATA(ls_buf).
-      CLEAR ls_verpo.
+      CLEAR: ls_verpo, ls_sernr.
 
       ls_verpo-exidv_ob = |{ gv_exidv ALPHA = IN }|.
       ls_verpo-exidv = |{ gv_exidv ALPHA = IN }|.
@@ -789,7 +790,7 @@ FORM commit_pack_buffer .
       ls_sernr-exidv_ob = |{ gv_exidv ALPHA = IN }|.
       ls_sernr-belnr = gv_vbeln.
       ls_sernr-posnr = ls_buf-posnr.
-      ls_sernr-sernr = ls_buf-sernr.
+      ls_sernr-sernr = |{ ls_buf-sernr ALPHA = OUT }|.
 
 *      ls_sernr_update-rfbel = gv_vbeln.
 *      ls_sernr_update-rfpos = ls_buf-posnr.
@@ -926,6 +927,7 @@ MODULE user_command_0600 INPUT.
     WHEN 'USEHU'.
       LOOP AT lt_hu_list INTO ls_hu_list.
         IF ls_hu_list-sel_idx = gc_x.
+          PERFORM clear_fields.
           CALL SCREEN '0400'.
         ENDIF.
       ENDLOOP.
@@ -1172,6 +1174,7 @@ MODULE user_command_0700 INPUT.
         ENDIF.
       ENDLOOP.
     WHEN 'ADD'.
+      PERFORM clear_fields.
       CALL SCREEN '0400'.
     WHEN 'HOME'.
       PERFORM popup_confirm.
@@ -1205,6 +1208,7 @@ ENDMODULE.
 *&
 *&---------------------------------------------------------------------*
 MODULE fill_hu_item OUTPUT.
+
   DATA(lv_idx) = sy-stepl + line_item.
 
   READ TABLE lt_item_list INTO ls_item_list INDEX lv_idx.
@@ -1236,6 +1240,7 @@ MODULE modify_item_list INPUT.
   lv_idx = sy-stepl + line_item.
 
   MODIFY lt_item_list FROM ls_item_list INDEX lv_idx.
+*  MODIFY lt_item_list FROM ls_item_list WHERE item_sel_idx = gc_x.
   READ TABLE lt_item_list INTO ls_item_list WITH KEY item_sel_idx = gc_x.
 
   gv_vepos = ls_item_list-vepos.
@@ -1257,7 +1262,7 @@ ENDMODULE.
 *&---------------------------------------------------------------------*
 FORM confirm_unpack_hu .
   DATA: lv_msg_matnr TYPE symsgv.
-  lv_msg_matnr = lv_matnr.
+  lv_msg_matnr = |{ lv_matnr ALPHA = OUT }|.
   CLEAR answer.
   CALL FUNCTION 'CALL_MESSAGE_SCREEN'
     EXPORTING
@@ -1286,7 +1291,12 @@ ENDFORM.
 *& <--  p2        text
 *&---------------------------------------------------------------------*
 FORM unpack_hu .
+
+  DATA: umatnr TYPE matnr18.
+
   CLEAR: lt_verko, lt_verpo.
+
+  umatnr = |{ ls_item_list-matnr  ALPHA = IN }|.
 
   ls_verko-exidv = |{ gv_exidv ALPHA = IN }|.
   APPEND ls_verko TO lt_verko.
@@ -1295,7 +1305,7 @@ FORM unpack_hu .
   ls_verpo-exidv = |{ gv_exidv ALPHA = IN }|.
   ls_verpo-velin = '1'.
   ls_verpo-tmeng = -1 * ls_item_list-vemng.
-  ls_verpo-matnr = ls_item_list-matnr.
+  ls_verpo-matnr = umatnr.
   APPEND ls_verpo TO lt_verpo.
 
   CALL FUNCTION 'WS_DELIVERY_UPDATE'

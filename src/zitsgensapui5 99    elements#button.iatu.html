@@ -1,0 +1,5 @@
+`if ( ( 'GEN_NAME'[GEN_LOOP_LINE].exists == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE].visible == "X" ) )
+    `<div data-sap-ui-type="sap.m.Button" data-text="`strmask('GEN_NAME'[GEN_LOOP_LINE].label) `" data-width="100%" data-press="setOkCode ('`'GEN_NAME'[GEN_LOOP_LINE].okcode`')" ></div>`
+else
+    `<span style="`margin_left("GEN_COLS", "GEN_WIDTH")`; height:1px"></span>`
+end;`                                                                                                                                  

@@ -1,0 +1,51 @@
+`if ( ( 'GEN_NAME'[GEN_LOOP_LINE].exists == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE].visible == "X" ) )
+    `<select style="`width("GEN_COLS", "GEN_WIDTH"); style("GEN_NAME", GEN_LOOP_LINE)`" `
+    `class="MobileListbox`class_ext("GEN_NAME", GEN_LOOP_LINE)` `class("GEN_NAME", GEN_LOOP_LINE)`" `
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].disabled == "X" ) `disabled="disabled" `end;
+    `name="`'GEN_NAME'[GEN_LOOP_LINE].name`" `
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].okcode != "" )
+        `onchange="setOkCode('`'GEN_NAME'[GEN_LOOP_LINE].okcode`');return false;" `
+    end
+    `onfocus="setFocusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `
+    `onblur="leaveFocusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" >`
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].VALUESET != "" )
+        myvalueset = 'GEN_NAME'[GEN_LOOP_LINE].VALUESET;
+        if (^myvalueset.dim > 1 && 'GEN_NAME'[GEN_LOOP_LINE].inputrequired == "" && 'GEN_NAME'[GEN_LOOP_LINE].disabled == "")
+          repeat with i from 1 to ^myvalueset.dim - 1`
+            <option value="`^myvalueset[i].key`" `
+                if ( ('GEN_NAME'[GEN_LOOP_LINE].selecteditem + 1) == i )
+                    `selected="selected" `
+                end
+            `>`strmaskext(^myvalueset[i].label, 1)`</option>
+`         end;
+        else
+          repeat with i from 1 to ^myvalueset.dim`
+            <option value="`^myvalueset[i].key`" `
+                if ( ('GEN_NAME'[GEN_LOOP_LINE].selecteditem + 1) == i )
+                    `selected="selected" `
+                end
+            `>`strmaskext(^myvalueset[i].label, 1)`</option>
+`         end;
+        end;
+        if ('GEN_NAME'[GEN_LOOP_LINE].SELECTEDITEMSPECIAL != "" || (^myvalueset.dim ==0 && 'GEN_NAME'[GEN_LOOP_LINE] != ""))`
+            <option value="`strmaskext('GEN_NAME'[GEN_LOOP_LINE], 1)`" selected="selected" `
+            `>`strmaskext('GEN_NAME'[GEN_LOOP_LINE], 1)`</option>
+`       end;
+        if ('GEN_NAME'[GEN_LOOP_LINE].inputrequired == ""  && 'GEN_NAME'[GEN_LOOP_LINE].disabled == "")`
+            <option value="`^myvalueset[^myvalueset.dim].key`" `
+                if ( 'GEN_NAME'[GEN_LOOP_LINE].SELECTEDITEMSPECIAL == "" && !(^myvalueset.dim ==0 && 'GEN_NAME'[GEN_LOOP_LINE] != "") &&
+                     ( ('GEN_NAME'[GEN_LOOP_LINE].selecteditem == ^myvalueset.dim - 1) || 'GEN_NAME'[GEN_LOOP_LINE].selecteditem == ""))
+                    `selected="selected" `
+                end
+            `>`strmaskext(^myvalueset[^myvalueset.dim].label, 1)`</option>
+`       end;
+   else
+     if ( 'GEN_NAME'[GEN_LOOP_LINE] != "")`
+            <option value="`strmaskext('GEN_NAME'[GEN_LOOP_LINE], 1)`" selected="selected" `
+            `>`strmaskext('GEN_NAME'[GEN_LOOP_LINE], 1)`</option>
+`    end;
+   end;
+    `</select>`
+else
+   `<span style="`margin_left("GEN_COLS", "GEN_WIDTH")`; height:1em; display: inline-block"></span>`
+end;`                                                                                                                                                                         

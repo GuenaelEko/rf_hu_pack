@@ -1,0 +1,92 @@
+`if ( 'GEN_NAME'[GEN_LOOP_LINE].exists == "X" )
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].mode == "multiline" )
+        `<textarea `
+         `class="MobileEditMultiline`class_ext('GEN_NAME', GEN_LOOP_LINE); class("GEN_NAME", GEN_LOOP_LINE)`" `
+         if ( 'GEN_NAME'[GEN_LOOP_LINE].disabled == "X" ) `disabled="disabled" `end;
+         if ( 'GEN_NAME'[GEN_LOOP_LINE].readonly == "X" ) `readonly="readonly" `end;
+         if ( 'GEN_NAME'[GEN_LOOP_LINE].okcode != "" )
+             `onchange="setOkCode('`'GEN_NAME'[GEN_LOOP_LINE].okcode`');return false;" `
+         end;
+         `style="`width("GEN_COLS", "GEN_WIDTH"); style("GEN_NAME", GEN_LOOP_LINE)`" `
+         `rows="`'GEN_NAME'[GEN_LOOP_LINE].rows`" cols="GEN_COLS" `
+         `onfocus="setFocusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `
+         `onblur="leaveFocusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `
+         `name="`'GEN_NAME'[GEN_LOOP_LINE].name`">`'GEN_NAME'[GEN_LOOP_LINE]`</textarea>`
+    else
+        if ( 'GEN_NAME'[GEN_LOOP_LINE].disabled == "X" )
+            if ( 'GEN_NAME'[GEN_LOOP_LINE].visible != "X" )
+                 `<input class="fd-input" type="hidden" `
+            elseif ( 'GEN_NAME'[GEN_LOOP_LINE].type == "Password" )
+                `<input class="fd-input" type="password" readonly="readonly" tabindex="-1" `
+                `style="`width("GEN_COLS", "GEN_WIDTH"); style("GEN_NAME", GEN_LOOP_LINE)`" `
+                if ( 'GEN_NAME'[GEN_LOOP_LINE].highlighted == "X" )
+                    `class="MobilePasswordHighlightedDisabled `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                else;
+                    `class="MobilePasswordDisabled `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                end;
+            elseif ( 'GEN_NAME'[GEN_LOOP_LINE].inputrequired == "X" )
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("GEN_COLS", "GEN_WIDTH"); align("GEN_NAME", GEN_LOOP_LINE); style("GEN_NAME", GEN_LOOP_LINE)`" `
+                if ( 'GEN_NAME'[GEN_LOOP_LINE].highlighted == "X" )
+                    `class="MobileEditRequiredHighlightedDisabled `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                else;
+                    `class="MobileEditRequiredDisabled `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" readonly="readonly" tabindex="-1" `
+                `style="`width("GEN_COLS", "GEN_WIDTH"); align("GEN_NAME", GEN_LOOP_LINE); style("GEN_NAME", GEN_LOOP_LINE)`" `
+                if ( 'GEN_NAME'[GEN_LOOP_LINE].highlighted == "X" )
+                    `class="MobileEditHighlightedDisabled `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                else;
+                    `class="MobileEditDisabled `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                end;
+            end;
+            `onfocus="focusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `
+            `name="`'GEN_NAME'[GEN_LOOP_LINE].name`" `
+            if ( ( 'GEN_NAME'[GEN_LOOP_LINE].inputrequired == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE] == "?" ) )
+                 `value="" `
+            else
+                 `value="`strmaskext('GEN_NAME'[GEN_LOOP_LINE], 1)`" `
+            end;
+            `size="`'GEN_NAME'[GEN_LOOP_LINE].width`" maxlength="`'GEN_NAME'[GEN_LOOP_LINE].maxinputsize`"
+            `sh()`>`
+        else                                     <!-- not disabled -->
+            icon( "GEN_NAME", GEN_LOOP_LINE );
+            if ( 'GEN_NAME'[GEN_LOOP_LINE].visible != "X" )
+                `<input class="fd-input" type="hidden" `
+            elseif ( 'GEN_NAME'[GEN_LOOP_LINE].type == "Password" )
+                `<input class="fd-input" type="password" width="100%" `
+            elseif ( 'GEN_NAME'[GEN_LOOP_LINE].inputrequired == "X" )
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GEN_NAME'[GEN_LOOP_LINE].highlighted == "X" )
+                    `class="MobileEditRequiredHighlighted `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                else
+                    `class="MobileEditRequired `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                end;
+            else
+                `<input class="fd-input" type="text" width="100%" `
+                if ( 'GEN_NAME'[GEN_LOOP_LINE].highlighted == "X" )
+                    `class="MobileEditHighlighted `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                else
+                    `class="MobileEdit `class("GEN_NAME", GEN_LOOP_LINE)`" `
+                end;
+            end;
+            if ( 'GEN_NAME'[GEN_LOOP_LINE].okcode != "" )
+                `onchange="setOkCode('`'GEN_NAME'[GEN_LOOP_LINE].okcode`');return false;" `
+            end;
+            `onfocus="setFocusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `
+            `onblur="leaveFocusField('`'GEN_NAME'[GEN_LOOP_LINE].name`');" `
+            `name="`'GEN_NAME'[GEN_LOOP_LINE].name`" `
+            if ( ~currdynpro.speechenabled != "" ) `id="`'GEN_NAME'[GEN_LOOP_LINE].name`" `end;
+            if ( ( 'GEN_NAME'[GEN_LOOP_LINE].inputrequired == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE] == "?" ) )
+                `value="" `
+            else
+                `value="`strmaskext('GEN_NAME'[GEN_LOOP_LINE], 1)`" `
+            end;
+            `maxlength="`'GEN_NAME'[GEN_LOOP_LINE].maxinputsize`"`
+            sh()`><br>`
+        end;
+    end;
+else
+
+end;`                                                                                                                                                                      

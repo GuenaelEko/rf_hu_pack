@@ -15,6 +15,23 @@
      <TEXT>Do you want really to unpack item &amp;1 ?</TEXT>
     </T100>
    </T100>
+   <I18N_LANGS>
+    <LANGU>둮</LANGU>
+   </I18N_LANGS>
+   <T100T>
+    <T100T>
+     <SPRSL>둮</SPRSL>
+     <ARBGB>ZRF_MSG</ARBGB>
+     <STEXT>Message Class for ZRF_PACK transaction</STEXT>
+    </T100T>
+   </T100T>
+   <T100_TEXTS>
+    <item>
+     <SPRSL>둮</SPRSL>
+     <MSGNR>000</MSGNR>
+     <TEXT>Do you want really to unpack item &amp;1 ?</TEXT>
+    </item>
+   </T100_TEXTS>
   </asx:values>
  </asx:abap>
 </abapGit>

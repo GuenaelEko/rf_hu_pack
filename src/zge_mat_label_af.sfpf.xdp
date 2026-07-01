@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xfa generator="AdobeLiveCycleDesigner_V11.0.9.20250609.2.65_SAP" APIVersion="3.6.25157.0"?><xdp:xdp xmlns:xdp="http://ns.adobe.com/xdp/" timeStamp="2026-06-25T20:39:51Z" uuid="265a6e1a-4670-441b-b6c4-5cb86e4437d9">
+<template xmlns:xliff="urn:oasis:names:tc:xliff:document:1.1" xmlns="http://www.xfa.org/schema/xfa-template/3.3/">
+   <?formServer defaultPDFRenderFormat acrobat10.0dynamic?>
+   <subform layout="tb" locale="ambient" name="data" restoreState="auto">
+      <pageSet>
+         <pageArea id="Page2_ID" name="Page1">
+            <medium long="75mm" orientation="landscape" short="25mm" stock="custom"/>
+            <contentArea h="26.2mm" name="MainArea" w="75.4mm"/>
+            <subform layout="tb" name="Material" w="28.575mm" x="3.175mm">
+               <bind match="none"/>
+               <field access="readOnly" h="7.821mm" hAlign="center" name="IV_MATNR" w="28.575mm">
+                  <ui>
+                     <textEdit hScrollPolicy="off">
+                        <border presence="hidden"/>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="12pt" typeface="Arial"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <bind match="dataRef" ref="$.IV_MATNR"/>
+                  <value>
+                     <text maxChars="40"/>
+                  </value>
+                  <desc>
+                     <text name="Schema Annotation">Material Number</text>
+                  </desc>
+               </field>
+               <?templateDesigner expand 1?></subform>
+            <subform hAlign="center" layout="tb" name="BC_Material" x="31.75mm" y="1.27mm">
+               <bind match="none"/>
+               <field access="readOnly" h="5.017mm" hAlign="center" name="IV_MATNR" w="22.225mm">
+                  <ui>
+                     <barcode checksum="auto" dataLength="10" textLocation="none" type="code128" wideNarrowRatio="fixed"/>
+                  </ui>
+                  <font typeface="Courier New"/>
+                  <bind match="dataRef" ref="$.IV_MATNR"/>
+                  <desc>
+                     <text name="Schema Annotation">Material Number</text>
+                  </desc>
+               </field>
+               <?templateDesigner expand 1?></subform>
+            <subform h="4.653mm" name="PostingDate" w="21.024mm" x="53.975mm">
+               <bind match="none"/>
+               <field access="readOnly" h="4.653mm" hAlign="right" name="IV_GR_DATE" w="21.024mm">
+                  <ui>
+                     <textEdit hScrollPolicy="off">
+                        <border presence="hidden"/>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="6pt" typeface="Arial" weight="bold"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para hAlign="right" vAlign="middle"/>
+                  <bind match="dataRef" ref="$.IV_GR_DATE">
+                     <picture>date{YYYY-MM-DD}</picture>
+                  </bind>
+                  <desc>
+                     <text name="Schema Annotation">Date</text>
+                  </desc>
+               </field>
+               <?templateDesigner expand 1?></subform>
+            <draw h="0in" name="Line4" w="69.85mm" x="3.175mm" y="6.858mm">
+               <value>
+                  <line slope="/"/>
+               </value>
+            </draw>
+            <subform h="3.705mm" name="EkinopsId" w="44.45mm" x="3.175mm" y="6.35mm">
+               <bind match="none"/>
+               <field access="readOnly" h="3.683mm" hAlign="center" name="IV_EKINOPS_ID" w="44.45mm">
+                  <ui>
+                     <textEdit>
+                        <border presence="hidden"/>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="5pt" typeface="Arial" weight="bold"/>
+                  <margin bottomInset="0mm" leftInset="1.2446mm" rightInset="0mm" topInset="0mm"/>
+                  <para vAlign="middle"/>
+                  <bind match="dataRef" ref="$.IV_EKINOPS_ID"/>
+               </field>
+               <?templateDesigner expand 1?></subform>
+            <subform hAlign="center" layout="tb" name="BC_EkinopsId" x="6.35mm" y="9.101mm">
+               <bind match="none"/>
+               <field access="readOnly" h="5.588mm" hAlign="center" name="IV_EKINOPS_ID" w="63.5mm">
+                  <ui>
+                     <barcode checksum="auto" dataLength="0" textLocation="none" type="code128" wideNarrowRatio="fixed"/>
+                  </ui>
+                  <font typeface="Courier New"/>
+                  <bind match="dataRef" ref="$.IV_EKINOPS_ID"/>
+                  <value>
+                     <text xliff:rid="57A77F30-5AAF-44D5-9B9C-E4A8A2016B78">1234567890</text>
+                  </value>
+               </field>
+               <?templateDesigner expand 1?>
+               <event activity="ready" name="event__form_ready" ref="$form">
+                  <script>var strlen = len($.IV_EKINOPS_ID.rawValue)
+$.IV_EKINOPS_ID.ui.#barcode.dataLength = strlen
+
+</script>
+               </event>
+            </subform>
+            <draw h="0in" name="Line4" w="69.85mm" x="3.175mm" y="15.367mm">
+               <value>
+                  <line slope="/"/>
+               </value>
+            </draw>
+            <field access="readOnly" h="3.175mm" name="IV_MAKTX" w="44.45mm" x="3.175mm" y="14.986mm">
+               <ui>
+                  <textEdit hScrollPolicy="off">
+                     <border presence="hidden"/>
+                     <margin/>
+                  </textEdit>
+               </ui>
+               <font size="5pt" typeface="Arial" weight="bold"/>
+               <margin bottomInset="0mm" leftInset="0mm" rightInset="0mm" topInset="0mm"/>
+               <para vAlign="middle"/>
+               <bind match="dataRef" ref="$.IV_MAKTX"/>
+               <calculate>
+                  <script contentType="application/x-javascript"/>
+               </calculate>
+               <value>
+                  <text maxChars="40"/>
+               </value>
+               <desc>
+                  <text name="Schema Annotation">Material Description</text>
+               </desc>
+            </field>
+            <draw h="0in" name="Line4" w="69.85mm" x="3.175mm" y="17.526mm">
+               <value>
+                  <line slope="/"/>
+               </value>
+            </draw>
+            <subform hAlign="center" layout="tb" name="BC_Batch" w="21.082mm" x="47.625mm" y="17.78mm">
+               <bind match="none"/>
+               <field access="readOnly" h="3.81mm" hAlign="center" name="BC_CHARG" w="20.97mm">
+                  <ui>
+                     <barcode checksum="auto" dataLength="10" textLocation="none" type="code128" wideNarrowRatio="fixed"/>
+                  </ui>
+                  <font typeface="Courier New"/>
+                  <bind match="dataRef" ref="$.IV_CHARG"/>
+                  <desc>
+                     <text name="Schema Annotation">Batch Number</text>
+                  </desc>
+               </field>
+               <field access="readOnly" h="3.81mm" hAlign="center" name="IV_CHARG" w="21.082mm">
+                  <ui>
+                     <textEdit hScrollPolicy="off">
+                        <border presence="hidden"/>
+                        <margin/>
+                     </textEdit>
+                  </ui>
+                  <font size="5pt" typeface="Arial" weight="bold"/>
+                  <margin bottomInset="1mm" leftInset="1mm" rightInset="1mm" topInset="1mm"/>
+                  <para hAlign="center" vAlign="middle"/>
+                  <bind match="dataRef" ref="$.IV_CHARG"/>
+                  <value>
+                     <text maxChars="10"/>
+                  </value>
+                  <desc>
+                     <text name="Schema Annotation">Batch Number</text>
+                  </desc>
+               </field>
+               <?templateDesigner expand 1?></subform>
+            <?templateDesigner expand 1?></pageArea>
+         <?templateDesigner expand 1?></pageSet>
+      <proto/>
+      <desc>
+         <text name="version">11.0.9.20250609.2.65.2</text>
+      </desc>
+      <?templateDesigner expand 1?>
+      <?renderCache.subset "Courier New" 0 0 ISO-8859-1 4 40 10 0013001400150016001700180019001A001B001C0123456789?></subform>
+   <?templateDesigner DefaultPreviewDynamic 1?>
+   <?templateDesigner DefaultRunAt client?>
+   <?templateDesigner WidowOrphanControl 0?>
+   <?templateDesigner DefaultCaptionFontSettings face:Arial;size:10;weight:normal;style:normal?>
+   <?templateDesigner DefaultValueFontSettings face:Arial;size:10;weight:normal;style:normal?>
+   <?templateDesigner DefaultLanguage JavaScript?>
+   <?acrobat JavaScript strictScoping?>
+   <?templateDesigner SaveTaggedPDF 1?>
+   <?templateDesigner SavePDFWithEmbeddedFonts 1?>
+   <?templateDesigner Grid show:1, snap:1, units:0, color:ff8080, origin:(0,0), interval:(125000,125000), objsnap:0, guidesnap:0, pagecentersnap:0?>
+   <?templateDesigner FormTargetVersion 33?>
+   <?templateDesigner Zoom 266?>
+   <?templateDesigner Rulers horizontal:1, vertical:1, guidelines:1, crosshairs:0?></template>
+<config xmlns="http://www.xfa.org/schema/xci/3.0/">
+   <agent name="designer">
+      <!--  [0..n]  -->
+      <destination>pdf</destination>
+      <pdf>
+         <!--  [0..n]  -->
+         <fontInfo/>
+      </pdf>
+      <common>
+         <template>
+            <base>https://MMC-S4SAP06.MMC.1STBASIS.COM:44300/sap/bc/fp/form/layout/</base>
+         </template>
+      </common>
+   </agent>
+   <present>
+      <!--  [0..n]  -->
+      <pdf>
+         <!--  [0..n]  -->
+         <version>1.7</version>
+         <adobeExtensionLevel>8</adobeExtensionLevel>
+      </pdf>
+      <common>
+         <data>
+            <xsl>
+               <uri/>
+            </xsl>
+            <outputXSL>
+               <uri/>
+            </outputXSL>
+         </data>
+      </common>
+      <xdp>
+         <packets>*</packets>
+      </xdp>
+   </present>
+</config>
+<connectionSet xmlns="http://www.xfa.org/schema/xfa-connection-set/2.8/">
+   <xsdConnection dataDescription="data" name="ZGE_MAT_LABEL_AF">
+      <uri/>
+      <rootElement>data</rootElement>
+   </xsdConnection>
+</connectionSet>
+<xfa:datasets xmlns:xfa="http://www.xfa.org/schema/xfa-data/1.0/">
+   <xfa:data xfa:dataNode="dataGroup"/>
+   <dd:dataDescription xmlns:dd="http://ns.adobe.com/data-description/" dd:name="data">
+      <data>
+         <IV_MATNR/>
+         <IV_MAKTX/>
+         <IV_GR_DATE/>
+         <IV_EKINOPS_ID/>
+         <IV_CHARG/>
+         <IV_QUANTITY/>
+      </data>
+   </dd:dataDescription>
+</xfa:datasets>
+<localeSet xmlns="http://www.xfa.org/schema/xfa-locale-set/2.7/"/>
+<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 9.1-c002 79.fd02715, 2024/05/22-04:12:37        ">
+   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+      <rdf:Description xmlns:xmp="http://ns.adobe.com/xap/1.0/" xmlns:pdfuaid="http://www.aiim.org/pdfua/ns/id/" xmlns:pdf="http://ns.adobe.com/pdf/1.3/" xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/" xmlns:desc="http://ns.adobe.com/xfa/promoted-desc/" rdf:about="">
+         <xmp:MetadataDate>2026-06-25T20:39:51Z</xmp:MetadataDate>
+         <xmp:CreatorTool>Adobe LiveCycle Designer 11.0</xmp:CreatorTool>
+         <pdfuaid:part>1</pdfuaid:part>
+         <pdf:Producer>Adobe LiveCycle Designer 11.0</pdf:Producer>
+         <xmpMM:DocumentID>uuid:265a6e1a-4670-441b-b6c4-5cb86e4437d9</xmpMM:DocumentID>
+         <desc:version rdf:parseType="Resource">
+            <rdf:value>11.0.9.20250609.2.65.2</rdf:value>
+            <desc:ref>/template/subform[1]</desc:ref>
+         </desc:version>
+      </rdf:Description>
+   </rdf:RDF>
+</x:xmpmeta></xdp:xdp>

@@ -1,0 +1,26 @@
+`if ( ( 'GEN_NAME'[GEN_LOOP_LINE].exists == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE].visible == "X" ) )
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].disabled != "X" )
+        `<input type="hidden" name="`'GEN_NAME'[GEN_LOOP_LINE].name`" value=" " `sh()`>`
+    end;
+    `<input type="checkbox" class="MobileCheck `class("GEN_NAME", GEN_LOOP_LINE)`" `
+    if ( ~currdynpro.speechenabled != "" ) `id="`'GEN_NAME'[GEN_LOOP_LINE].name`" `end;
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].label == "" )
+        `style="`width("GEN_COLS", "GEN_WIDTH"); style("GEN_NAME", GEN_LOOP_LINE)`" `
+    else
+        style_attr("GEN_NAME", GEN_LOOP_LINE);
+    end;
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].disabled == "X" ) `disabled="disabled" `end;
+    if ( 'GEN_NAME'[GEN_LOOP_LINE] == "X" ) `checked="checked" `end;
+    `id="`mkid('GEN_NAME'[GEN_LOOP_LINE].name)`" name="`'GEN_NAME'[GEN_LOOP_LINE].name`" value="X" `
+    if ( 'GEN_NAME'[GEN_LOOP_LINE].okcode != "" )
+        `onclick="setOkCode('`'GEN_NAME'[GEN_LOOP_LINE].okcode`');" `
+    end;
+    sh()`>`
+    icon( "GEN_NAME", GEN_LOOP_LINE );
+    if ( has_label("GEN_NAME", GEN_LOOP_LINE) )
+        `<label class="MobileCheckLabel" `style_attr("GEN_NAME", GEN_LOOP_LINE)`
+          for="`mkid('GEN_NAME'[GEN_LOOP_LINE].name)`">`label("GEN_NAME", GEN_LOOP_LINE)`</label>`
+    end;
+else
+    `<span style="`margin_left("GEN_COLS", "GEN_WIDTH")`; height:1em; display: inline-block"></span>`
+end;`                                                                                                      

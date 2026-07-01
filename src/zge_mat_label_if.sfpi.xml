@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_SFPI" serializer_version="v1.0.0">
+ <asx:abap version="1.0" xmlns:asx="http://www.sap.com/abapxml">
+  <asx:values>
+   <VERSION>1</VERSION>
+   <TYPE/>
+   <INTERFACE href="#o1"/>
+   <INTERFACET>
+    <FPINTERFACET>
+     <NAME/>
+     <STATE/>
+     <LANGUAGE>E</LANGUAGE>
+     <ID/>
+     <TEXT>Material Rack Label Form Interface</TEXT>
+    </FPINTERFACET>
+   </INTERFACET>
+  </asx:values>
+  <asx:heap xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:abap="http://www.sap.com/abapxml/types/built-in" xmlns:cls="http://www.sap.com/abapxml/classes/global" xmlns:dic="http://www.sap.com/abapxml/types/dictionary">
+   <cls:CL_FP_INTERFACE_DATA id="o1">
+    <CL_FP_INTERFACE_DATA classVersion="1">
+     <CODING href="#o5"/>
+     <PARAMETERS href="#o4"/>
+     <GLOBAL_DEFINITIONS href="#o3"/>
+     <REFERENCE_FIELDS href="#o2"/>
+     <XSD_DEFINITIONS/>
+    </CL_FP_INTERFACE_DATA>
+   </cls:CL_FP_INTERFACE_DATA>
+   <cls:CL_FP_REFERENCE_FIELDS id="o2">
+    <CL_FP_INTERFACE_DATA_CHANGED classVersion="1">
+     <INTERFACE_DATA href="#o1"/>
+    </CL_FP_INTERFACE_DATA_CHANGED>
+    <CL_FP_REFERENCE_FIELDS classVersion="1">
+     <REFERENCE_FIELDS/>
+    </CL_FP_REFERENCE_FIELDS>
+   </cls:CL_FP_REFERENCE_FIELDS>
+   <cls:CL_FP_GLOBAL_DEFINITIONS id="o3">
+    <CL_FP_INTERFACE_DATA_CHANGED classVersion="1">
+     <INTERFACE_DATA href="#o1"/>
+    </CL_FP_INTERFACE_DATA_CHANGED>
+    <CL_FP_GLOBAL_DEFINITIONS classVersion="1">
+     <GLOBAL_DATA/>
+     <TYPES/>
+     <FIELDSYMBOLS/>
+    </CL_FP_GLOBAL_DEFINITIONS>
+   </cls:CL_FP_GLOBAL_DEFINITIONS>
+   <cls:CL_FP_PARAMETERS id="o4">
+    <CL_FP_INTERFACE_DATA_CHANGED classVersion="1">
+     <INTERFACE_DATA href="#o1"/>
+    </CL_FP_INTERFACE_DATA_CHANGED>
+    <CL_FP_PARAMETERS classVersion="1">
+     <IMPORT_PARAMETERS>
+      <SFPIOPAR>
+       <NAME>IV_MATNR</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>MATNR</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>IV_MAKTX</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>MAKTX</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>IV_GR_DATE</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>STRING</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>IV_EKINOPS_ID</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>STRING</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>IV_CHARG</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>CHARG_D</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+      <SFPIOPAR>
+       <NAME>IV_QUANTITY</NAME>
+       <TYPING>TYPE</TYPING>
+       <TYPENAME>MENGE_D</TYPENAME>
+       <OPTIONAL/>
+       <BYVALUE/>
+       <DEFAULTVAL/>
+       <STANDARD/>
+       <CONSTANT/>
+      </SFPIOPAR>
+     </IMPORT_PARAMETERS>
+     <EXPORT_PARAMETERS/>
+     <TABLE_PARAMETERS/>
+     <EXCEPTIONS/>
+    </CL_FP_PARAMETERS>
+   </cls:CL_FP_PARAMETERS>
+   <cls:CL_FP_CODING id="o5">
+    <CL_FP_INTERFACE_DATA_CHANGED classVersion="1">
+     <INTERFACE_DATA href="#o1"/>
+    </CL_FP_INTERFACE_DATA_CHANGED>
+    <CL_FP_CODING classVersion="1">
+     <INPUT_PARAMETERS/>
+     <OUTPUT_PARAMETERS/>
+     <INITIALIZATION/>
+     <FORMS>
+      <FPCLINE>FORM compute_ekinops_id</FPCLINE>
+      <FPCLINE>  USING iv_matnr TYPE matnr</FPCLINE>
+      <FPCLINE>        iv_qty TYPE menge_d</FPCLINE>
+      <FPCLINE>        iv_charg TYPE charg_d</FPCLINE>
+      <FPCLINE>  CHANGING cv_eid TYPE string.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  &quot; Remove leading zeroes from material number for readability</FPCLINE>
+      <FPCLINE>  DATA lv_matnr_ext TYPE string.</FPCLINE>
+      <FPCLINE>  lv_matnr_ext = iv_matnr.</FPCLINE>
+      <FPCLINE>  SHIFT lv_matnr_ext LEFT DELETING LEADING &apos;0&apos;.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  &quot; Format: P&lt;MATNR&gt;Q&lt;QTY&gt;S&lt;BATCH&gt;</FPCLINE>
+      <FPCLINE>  cv_eid = |P{ lv_matnr_ext }Q{ iv_qty }S{ iv_charg }|.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>ENDFORM.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>FORM format_gr_date</FPCLINE>
+      <FPCLINE>  USING    iv_datum  TYPE datum</FPCLINE>
+      <FPCLINE>  CHANGING cv_date   TYPE string.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  DATA: lv_day    TYPE string,</FPCLINE>
+      <FPCLINE>        lv_year   TYPE string,</FPCLINE>
+      <FPCLINE>        lv_month  TYPE i,</FPCLINE>
+      <FPCLINE>        lt_months TYPE TABLE OF string.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  APPEND &apos;Jan&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Feb&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Mar&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Apr&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;May&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Jun&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Jul&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Aug&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Sep&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Oct&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Nov&apos; TO lt_months.</FPCLINE>
+      <FPCLINE>  APPEND &apos;Dec&apos; TO lt_months.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  lv_month = iv_datum+4(2).</FPCLINE>
+      <FPCLINE>  lv_day   = iv_datum+6(2).</FPCLINE>
+      <FPCLINE>  lv_year  = iv_datum(4).</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  &quot; Remove leading zero from day</FPCLINE>
+      <FPCLINE>  SHIFT lv_day LEFT DELETING LEADING &apos;0&apos;.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  DATA lv_month_str TYPE string.</FPCLINE>
+      <FPCLINE>  READ TABLE lt_months INTO lv_month_str INDEX lv_month.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>  cv_date = |{ lv_month_str } { lv_day }, { lv_year }|.</FPCLINE>
+      <FPCLINE/>
+      <FPCLINE>ENDFORM.</FPCLINE>
+     </FORMS>
+    </CL_FP_CODING>
+   </cls:CL_FP_CODING>
+  </asx:heap>
+ </asx:abap>
+</abapGit>

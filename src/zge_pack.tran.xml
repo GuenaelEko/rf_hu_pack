@@ -18,6 +18,12 @@
     <TCODE>ZGE_PACK</TCODE>
     <TTEXT>HU Packing G.E</TTEXT>
    </TSTCT>
+   <I18N_TPOOL>
+    <TSTCT>
+     <SPRSL>둮</SPRSL>
+     <TTEXT>HU Packing G.E</TTEXT>
+    </TSTCT>
+   </I18N_TPOOL>
   </asx:values>
  </asx:abap>
 </abapGit>

@@ -1,0 +1,13 @@
+<!-- frame begin -->
+`if ( ( 'GEN_NAME'[GEN_LOOP_LINE].exists == "X" ) && ( 'GEN_NAME'[GEN_LOOP_LINE].visible == "X" ) )
+    `<div class="MobileFrame `class("GEN_NAME", GEN_LOOP_LINE)`" `
+    `style="`width("GEN_COLS", "GEN_WIDTH"); style("GEN_NAME", GEN_LOOP_LINE)`">`
+    if ( has_label("GEN_NAME", GEN_LOOP_LINE) )
+        `<div class="MobileFrameHeader">`label("GEN_NAME", GEN_LOOP_LINE)`</div>`
+    else
+        `<div>&nbsp;</div>`
+    end;
+else
+    `<div class="MobileFrameHidden">&nbsp;`
+end;`
+                                                                                                                                                                                                                                                            
